@@ -21,13 +21,13 @@
 #include "coxeter_enumerator.hpp"
 
 int main(){
-  CoxeterEnumerator<'B', 8> enumerator;
+  CoxeterEnumerator<'B', 4> enumerator(2);
   enumerator.display();
   enumerator.init();
   Int n = 0;
   do{
+    enumerator.get().display();
     ++ n;
-    //enumerator.get().display();
   }while(enumerator.next());
   cout << n << endl;
 }

@@ -27,10 +27,10 @@ private:
   Int tab[N];
 public:
   Permutation();
-  void set_identity();
+  void init(size_t nb_fixed, Int* fixed);
   Int operator[](Int i) const;
   Int& operator[](Int i);
-  bool next();
+  bool next(size_t nb_fixed);
 };
 
 template<Int N> ostream& operator<<(ostream& os, const Permutation<N>& P);
@@ -42,9 +42,24 @@ inline void swap(Int& x, Int& y) {
 }
 
 template<Int N> inline void
-Permutation<N>::set_identity() {
-  for (size_t i = 0; i < N; ++ i) {
-    tab[i] = i;
+Permutation<N>::init(size_t nb_fixed, Int* fixed) { 
+  size_t j = 0;
+  for (size_t i = 0; i < N - nb_fixed; ++ i) {
+    bool flag = true;
+    while (flag) {
+      flag = false;
+      for (size_t t = 0; t < nb_fixed; ++ t) {
+	if (fixed[t] == j) {
+	  ++j;
+	  flag = true;
+	}
+      }
+    }
+    tab[i] = j;
+    ++ j;
+  }
+  for (size_t t = 0; t < nb_fixed; ++ t) {
+    tab[N - nb_fixed + t] = fixed[t];
   }
 }
 
@@ -65,8 +80,8 @@ Int& Permutation<N>::operator[](Int i){
 }
 
 template<Int N>
-bool Permutation<N>::next() {
-  for(size_t first = 1; first < N; ++first) {
+bool Permutation<N>::next(size_t nb_fixed) {
+  for(size_t first = 1; first < N - nb_fixed; ++first) {
     if(tab[first - 1] < tab[first]) {
       size_t j = 0;
       while(tab[first] < tab[j]) ++ j;
