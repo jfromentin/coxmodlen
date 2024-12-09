@@ -27,6 +27,7 @@ private:
 public:
   void init(size_t nb_fixed, Int* fixed);
   bool next(size_t nb_fixed);
+  size_t length(Int k, Int h);
   void display() const;
 };
 
@@ -38,6 +39,7 @@ private:
 public:
   void init(size_t nb_fixed, Int* fixed);
   bool next(size_t nb_fixed);
+  size_t length(Int k, Int h);
   void display() const;
 };
 
@@ -49,6 +51,7 @@ private:
 public:
   void init(size_t nb_fixed, Int* fixed);
   bool next(size_t nb_fixed);
+  size_t length(Int k, Int h);
   void display() const;
 };
 
@@ -60,6 +63,18 @@ void Element<'A', N>::init(size_t nb_fixed, Int* fixed) {
 template <Int N> inline
 bool Element<'A', N>::next(size_t nb_fixed) {
   return sigma.next(nb_fixed);
+}
+
+template <Int N> inline
+size_t Element<'A', N>::length(Int k, Int h) {
+  size_t res = 0;
+  for (Int i = 0; i <= N; ++ i) {
+    Int v = sigma[i];
+    for (Int j = i + h; j <= N; j += k) {
+      if (v > sigma[j]) ++ res;
+    }
+  }
+  return res;
 }
 
 template<Int N> inline
@@ -84,6 +99,25 @@ bool Element<'B', N>::next(size_t nb_fixed) {
   }
   for (size_t i = 0; i < N; ++i) sign[i] = 1;
   return sigma.next(nb_fixed);
+}
+
+template <Int N> inline
+size_t Element<'B', N>::length(Int k, Int h) {
+  Int tab[2 * N + 1];
+  tab[N] = 0;
+  for (Int i = 1; i <= N; ++ i) {
+    Int v = sign[i - 1] * (sigma[i - 1] + 1);
+    tab[N + i] = v;
+    tab[N - i] = - v;
+  }
+  size_t res = 0;
+  for (Int i = 0; i <= 2 * N; ++ i) {
+    Int vi = tab[i];
+    for (Int j = i + h; j <= 2 * N; j += k) {
+      if (vi > tab[j]) ++ res;
+    }
+  }
+  return res / 2;
 }
 
 template<Int N> inline
@@ -121,6 +155,29 @@ bool Element<'D', N>::next(size_t nb_fixed) {
   for (size_t i = 0; i < N; ++i) sign[i] = 1;
   nb_minus = 0;
   return sigma.next(nb_fixed);
+}
+
+template <Int N> inline
+size_t Element<'D', N>::length(Int k, Int h) {
+  Int tab[2 * N + 1];
+  tab[N] = 0;
+  for (Int i = 1; i <= N; ++ i) {
+    Int v = sign[i - 1] * (sigma[i - 1] + 1);
+    tab[N + i] = v;
+    tab[N - i] = - v;
+  }
+  size_t res = 0;
+  for (Int i = 0; i <= 2 * N; ++ i) {
+    Int vi = tab[i];
+    for (Int j = i + h; j <= 2 * N; j += k) {
+      if (vi > tab[j]) ++ res;
+    }
+  }
+  Int s = 0;
+  for (Int i = 0; i < N; ++i) {
+    if(sign[i] == -1) ++ s;
+  }
+  return res / 2  - s;
 }
 
 template<Int N> inline

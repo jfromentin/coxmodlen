@@ -3,7 +3,7 @@
 //                                                                            //
 //  This file is part of CoxModLen  <https://github.com/jfromentin/coxmodlen> //
 //                                                                            //
-//  CoxModLen is free software: you can redistribute it and/or modify it       //
+//  CoxModLen is free software: you can redistribute it and/or modify it      //
 //  under the terms of the GNU General Public License as published by the     //
 //  Free Software Foundation, either version 3 of the License, or             //
 //  (at your option) any later version.                                       //
@@ -19,15 +19,19 @@
 
 
 #include "coxeter_enumerator.hpp"
+#include "results.hpp"
 
 int main(){
-  CoxeterEnumerator<'B', 4> enumerator(2);
+  Int k = 2;
+  Int h = 1;
+  Results res;
+  CoxeterEnumerator<'D', 4> enumerator;
   enumerator.display();
   enumerator.init();
-  Int n = 0;
   do{
-    enumerator.get().display();
-    ++ n;
+    auto x = enumerator.get();
+    size_t l = x.length(k, h);
+    res.add(l);
   }while(enumerator.next());
-  cout << n << endl;
+  res.display();
 }
