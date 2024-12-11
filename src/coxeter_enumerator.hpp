@@ -58,6 +58,13 @@ CoxeterEnumerator<T,N>::CoxeterEnumerator (Int a) {
 }
 
 template <char T, Int N> inline
+CoxeterEnumerator<T,N>::CoxeterEnumerator (Int a, Int b) {
+  nb_fixed = 2;
+  fixed[0] = a;
+  fixed[1] = b;
+}
+
+template <char T, Int N> inline
 void CoxeterEnumerator<T, N>::init() {
   current.init(nb_fixed, fixed);
 }

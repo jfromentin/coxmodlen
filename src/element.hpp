@@ -159,25 +159,22 @@ bool Element<'D', N>::next(size_t nb_fixed) {
 
 template <Int N> inline
 size_t Element<'D', N>::length(Int k, Int h) {
-  Int tab[2 * N + 1];
-  tab[N] = 0;
+  size_t res = 0;
+  Int tab[N + 1];
+  tab[0] = 0;
   for (Int i = 1; i <= N; ++ i) {
     Int v = sign[i - 1] * (sigma[i - 1] + 1);
-    tab[N + i] = v;
-    tab[N - i] = - v;
+    tab[i] = v;
   }
-  size_t res = 0;
-  for (Int i = 0; i <= 2 * N; ++ i) {
+  for (Int i = 1; i < N; ++ i) {
     Int vi = tab[i];
-    for (Int j = i + h; j <= 2 * N; j += k) {
-      if (vi > tab[j]) ++ res;
+    for (Int j = i + 1; j <= N; ++ j) {
+      if ( ((j - i) % k == h) and tab[i] > tab[j] ) ++ res;
+      if ( ((2 * N - (j + i)) % k == h) and -tab[i] > tab[j]) ++ res;
     }
   }
-  Int s = 0;
-  for (Int i = 0; i < N; ++i) {
-    if(sign[i] == -1) ++ s;
-  }
-  return res / 2  - s;
+  return res;
+
 }
 
 template<Int N> inline

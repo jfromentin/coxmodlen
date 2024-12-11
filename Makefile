@@ -1,2 +1,2 @@
 all:
-	g++ -O3 src/*.cpp -o test
+	g++ -O3 src/main.cpp -o test2

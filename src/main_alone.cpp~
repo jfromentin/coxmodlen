@@ -1,0 +1,89 @@
+#include "permutation.hpp"
+#include <ostream>
+#include <thread>
+
+
+static const size_t nb_threads = 30;
+
+struct Task {
+  size_t a;
+  size_t b;
+};
+
+struct Data {
+  Task* tasks;
+  size_t nb_tasks;
+  size_t res[ResSize];
+  size_t total;
+};
+
+void* work(void* ptr) {
+  Data* data = (Data*)ptr;
+  for (int i = 0; i < ResSize; ++ i) data->res[i] = 0;
+  data->total = 0;
+  Permutation sigma;
+  for (int i = 0; i < data->nb_tasks; ++ i) {
+    sigma.init2(data->tasks[i].a, data->tasks[i].b);
+    do{
+      int l = sigma.k_length();
+      data->res[l] += 1;
+      data->total += 1;
+    }while(sigma.next2());
+  }
+  pthread_exit(NULL);
+}
+
+void add_task(Data& data, size_t a, size_t b) {
+  data.tasks[data.nb_tasks].a = a;
+  data.tasks[data.nb_tasks].b = b;
+  ++ data.nb_tasks;
+}
+
+int main() {
+  cout << "> Initialise tasks *" << endl;
+  size_t nb_tasks = Prank * (Prank - 1);
+  cout << " Rank of A: " << Arank << endl;
+  cout << " Permutation rank: " << Prank << endl;
+  cout << " Number of tasks: " << nb_tasks << endl;
+  cout << " Number of threads: " << nb_threads << endl;
+  size_t max_nb_tasks = (nb_tasks + nb_threads - 1) / nb_threads;
+  cout << " Max number of tasks by thread: " << max_nb_tasks << endl;
+  Data datas[nb_threads];
+  for (size_t i = 0; i < nb_threads; ++ i) {
+    datas[i].tasks = new Task[max_nb_tasks];
+    datas[i].nb_tasks = 0;
+  }
+  size_t id = 0;
+  for (size_t a = 0; a < Prank; ++ a) {
+    for (size_t b = 0; b < Prank; ++ b) {
+      if (a != b) {
+	size_t t = id % nb_threads;
+	add_task(datas[t], a, b);
+	++ id;
+      }
+    }
+  }
+  pthread_t thread_id[nb_threads];
+  cout << "> Launch threads" << endl;
+  for (size_t i = 0; i < nb_threads; ++ i) {
+    int err = pthread_create(&thread_id[i], NULL, work, &datas[i]);
+  }
+  for (size_t i = 0; i < nb_threads; ++ i) {
+    pthread_join(thread_id[i], NULL);
+  }
+  cout << "> Gather results" << endl;
+  size_t total = 0;
+  size_t res[ResSize];
+  for (int i = 0; i < ResSize; ++ i) res[i] = 0;
+  for (size_t i = 0; i < nb_threads; ++ i) {
+    total += datas[i].total;
+    for (int j = 0; j < ResSize; ++ j) res[j] += datas[i].res[j];
+  }
+  cout << " Total = " << total << " vs " << Asize << endl;
+  cout << " -> [" << res[0];
+  for (int i = 1; i < ResSize; ++ i) {
+    cout << ',' << res[i];
+  }
+  cout << ']' << endl;
+ 
+}

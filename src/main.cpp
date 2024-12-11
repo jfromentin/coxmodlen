@@ -25,7 +25,7 @@ int main(){
   Int k = 2;
   Int h = 1;
   Results res;
-  CoxeterEnumerator<'D', 4> enumerator;
+  CoxeterEnumerator<'D', 10> enumerator;
   enumerator.display();
   enumerator.init();
   do{
