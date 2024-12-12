@@ -10,7 +10,8 @@ private:
 public:
   Results();
   void add(size_t i);
-  size_t maximum() const;
+  size_t read(size_t i) const;
+  size_t get_size() const;
   void display() const;
 };
 
@@ -29,8 +30,12 @@ inline void Results::add(size_t i) {
   }
 }
 
-inline size_t Results::maximum() const {
-  return size - 1;
+inline size_t Results::read(size_t i) const {
+  return data[i];
+}
+
+inline size_t Results::get_size() const {
+  return size;
 }
 
 inline void Results::display() const {

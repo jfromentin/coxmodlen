@@ -4,9 +4,9 @@
 #include "coxeter_enumerator.hpp"
 #include "results.hpp"
 
-static const size_t nb_threads = 30;
-static const Int N = 10;
-static const char T = 'A';
+static const size_t nb_threads = 32;
+static const Int N = 11;
+static const char T = 'B';
 static const Int k = 2;
 static const Int h = 1;
 
@@ -82,12 +82,28 @@ int main() {
   }
   pthread_t thread_id[nb_threads];
   cout << "> Launch threads" << endl;
-  for (size_t i = 0; i < nb_threads; ++ i) {
-    int err = pthread_create(&thread_id[i], NULL, work, &datas[i]);
+  for (size_t t = 0; t < nb_threads; ++ t) {
+    int err = pthread_create(&thread_id[t], NULL, work, &datas[t]);
   }
-  for (size_t i = 0; i < nb_threads; ++ i) {
-    pthread_join(thread_id[i], NULL);
+  for (size_t t = 0; t < nb_threads; ++ t) {
+    pthread_join(thread_id[t], NULL);
   }
+  size_t size = 0;
+  for (size_t t = 0; t < nb_threads; ++ t) {
+    size = max(size, datas[t].res.get_size());
+  }
+  size_t* res = new size_t[size];
+  for (size_t i = 0; i < size; ++i) res[i] = 0;
+  for (size_t t = 0; t < nb_threads; ++ t) {
+    for (size_t i = 0; i < datas[t].res.get_size(); ++ i) {
+      res[i] += datas[t].res.read(i);
+    }
+  }
+  cout << '[' << res[0];
+  for (size_t i = 1; i < size; ++ i) {
+    cout << ',' << res[i];
+  }
+  cout << ']' <<  endl;
   /*  cout << "> Gather results" << endl;
   size_t total = 0;
   size_t res[ResSize];
