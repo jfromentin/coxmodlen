@@ -17,10 +17,6 @@
 //  with CoxModLen. If not, see <https://www.gnu.org/licenses/>.              //
 //****************************************************************************//
 
-static const Int N = 11;
-static const char T = 'B';
-static const Int k = 2;
-static const Int h = 1;
-static const size_t nb_threads = 32;
-static const string output_dir = "output";
+#include "config_oar.hpp"
 
+static const string output_dir = "output";

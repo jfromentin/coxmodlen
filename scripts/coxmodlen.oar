@@ -1,0 +1,9 @@
+#OAR -n CoxModLen
+#OAR -l /core=1,walltime=200:00:00
+#OAR --array-param-file /nfs/home/lmpa/jfromentin/git/coxmodlen/scripts/coxmodlen.arg
+#OAR -t besteffort
+#OAR -t idempotent
+#OAR -O oar/coxmodlen.%jobid%.out
+#OAR -E oar/coxmodlen.%jobid%.err
+
+/nfs/home/lmpa/jfromentin/git/coxmodlen/bin/coxmodlen_multi "$@"
