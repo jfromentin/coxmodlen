@@ -13,6 +13,7 @@ if __name__ == "__main__":
     if not t in ['A', 'B', 'D']:
         print("t must be A, B or D")
         exit(0)
+
     n = int(sys.argv[2])
     if not n in range(2,21):
         print("n must be in [2,20]")
@@ -30,16 +31,20 @@ if __name__ == "__main__":
     print("*********************************************")
 
     output_dir = "/nfs/home/lmpa/jfromentin/git/coxmodlen/output"
-    output_dir = "output"
 
+    if t == 'A':
+        pn = n + 1
+    else:
+        pn = n
+        
     total = 0
     res = [0] * 1024
     max_size = 0
-    for a in range(n + 1):
-        for b in range(n + 1):
+    for a in range(pn):
+        for b in range(n):
             if b != a:
-                for c in range(n + 1):
-                    if c != a and c != b and (a,b,c) == (0,1,2):
+                for c in range(pn):
+                    if c != a and c != b:
                         filename = output_dir + '/' + t +  repr(n) + "_for_" + repr(k) + "_" + repr(h) + "_with_" + repr(a) + "_" + repr(b) +"_" + repr(c)
                         print(filename)
                         file = open(filename, 'r')

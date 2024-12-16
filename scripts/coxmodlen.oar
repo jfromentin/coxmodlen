@@ -1,5 +1,5 @@
 #OAR -n CoxModLen
-#OAR -l /core=1,walltime=200:00:00
+#OAR -l /core=1,walltime=10:00:00
 #OAR --array-param-file /nfs/home/lmpa/jfromentin/git/coxmodlen/scripts/coxmodlen.arg
 #OAR -t besteffort
 #OAR -t idempotent
