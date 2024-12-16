@@ -1,0 +1,14 @@
+Coxeter group: B4
+Modulus: 3
+Remainder: 2
+Total: 384
+
+[16, 48, 92, 134, 54, 34, 6]
+
+16
+48
+92
+134
+54
+34
+6

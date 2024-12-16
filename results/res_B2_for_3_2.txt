@@ -1,0 +1,9 @@
+Coxeter group: B2
+Modulus: 3
+Remainder: 2
+Total: 8
+
+[4, 4]
+
+4
+4

@@ -1,0 +1,10 @@
+Coxeter group: B2
+Modulus: 3
+Remainder: 1
+Total: 8
+
+[1, 6, 1]
+
+1
+6
+1

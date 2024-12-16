@@ -1,0 +1,11 @@
+Coxeter group: A3
+Modulus: 3
+Remainder: 1
+Total: 24
+
+[1, 11, 11, 1]
+
+1
+11
+11
+1

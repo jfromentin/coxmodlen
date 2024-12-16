@@ -1,0 +1,11 @@
+Coxeter group: B3
+Modulus: 3
+Remainder: 2
+Total: 48
+
+[11, 13, 13, 11]
+
+11
+13
+13
+11

@@ -1,0 +1,12 @@
+Coxeter group: D4
+Modulus: 3
+Remainder: 2
+Total: 192
+
+[7, 52, 74, 52, 7]
+
+7
+52
+74
+52
+7

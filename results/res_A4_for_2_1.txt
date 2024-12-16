@@ -1,0 +1,14 @@
+Coxeter group: A4
+Modulus: 2
+Remainder: 1
+Total: 120
+
+[1, 12, 23, 48, 23, 12, 1]
+
+1
+12
+23
+48
+23
+12
+1
