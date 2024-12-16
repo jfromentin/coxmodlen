@@ -57,8 +57,8 @@ int main(int argc, char** argv) {
   file << T << N << endl;
   file << k << " " << h << endl;
   file << a << " " << b << " " << c << endl;
+  file << results.get_size() << endl;
   for (size_t i = 0; i < results.get_size(); ++ i) file << results.read(i) << endl;
   file.close();
   exit(0);
- 
 }
