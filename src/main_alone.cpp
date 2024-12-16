@@ -3,12 +3,7 @@
 
 #include "coxeter_enumerator.hpp"
 #include "results.hpp"
-
-static const size_t nb_threads = 32;
-static const Int N = 11;
-static const char T = 'B';
-static const Int k = 2;
-static const Int h = 1;
+#include "config.hpp"
 
 struct Task {
   size_t a;
@@ -31,7 +26,7 @@ void* work(void* ptr) {
       auto x = enumerator.get();
       size_t l = x.length(k, h);
       data->res.add(l);
-    }while(enumerator.next());
+    } while(enumerator.next());
   }
   pthread_exit(NULL);
 }

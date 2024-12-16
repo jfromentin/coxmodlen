@@ -29,6 +29,7 @@ public:
   CoxeterEnumerator(Int a);
   CoxeterEnumerator(Int a, Int b);
   CoxeterEnumerator(Int a, Int b, Int c);
+  Int permutation_rank() const;
   void display();
   void init();
   bool next();
@@ -47,21 +48,42 @@ void CoxeterEnumerator<T, N>::display() {
 }
 
 template <char T, Int N> inline
-CoxeterEnumerator<T,N>::CoxeterEnumerator () {
+CoxeterEnumerator<T, N>::CoxeterEnumerator () {
   nb_fixed = 0;
 }
 
 template <char T, Int N> inline
-CoxeterEnumerator<T,N>::CoxeterEnumerator (Int a) {
+Int CoxeterEnumerator<T, N>::permutation_rank() const {
+  switch(T) {
+  case 'A':
+    return N + 1;
+  case 'B':
+  case 'D':
+    return N;
+  default:
+    assert(false);
+  }
+}
+
+template <char T, Int N> inline
+CoxeterEnumerator<T, N>::CoxeterEnumerator (Int a) {
   nb_fixed = 1;
   fixed[0] = a;
 }
 
 template <char T, Int N> inline
-CoxeterEnumerator<T,N>::CoxeterEnumerator (Int a, Int b) {
+CoxeterEnumerator<T, N>::CoxeterEnumerator (Int a, Int b) {
   nb_fixed = 2;
   fixed[0] = a;
   fixed[1] = b;
+}
+
+template <char T, Int N> inline
+CoxeterEnumerator<T, N>::CoxeterEnumerator (Int a, Int b, Int c) {
+  nb_fixed = 3;
+  fixed[0] = a;
+  fixed[1] = b;
+  fixed[2] = c;
 }
 
 template <char T, Int N> inline

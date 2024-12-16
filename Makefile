@@ -1,5 +1,5 @@
 ALONE	= bin/coxmodlen_alone
-#MULTI 	= bin/coxmodlen_multi
+MULTI 	= bin/coxmodlen_multi
 
 CPP	 = g++
 CFLAGS	 = -Wno-stringop-overflow -DNDEBUG -O3
