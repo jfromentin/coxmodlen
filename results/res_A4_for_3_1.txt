@@ -1,0 +1,13 @@
+Coxeter group: A4
+Modulus: 3
+Remainder: 1
+Total: 120
+
+[1, 22, 37, 37, 22, 1]
+
+1
+22
+37
+37
+22
+1

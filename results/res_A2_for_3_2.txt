@@ -1,0 +1,9 @@
+Coxeter group: A2
+Modulus: 3
+Remainder: 2
+Total: 6
+
+[3, 3]
+
+3
+3

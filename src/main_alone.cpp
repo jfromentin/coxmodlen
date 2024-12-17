@@ -1,5 +1,6 @@
 #include <ostream>
 #include <thread>
+#include <fstream>
 
 #include "coxeter_enumerator.hpp"
 #include "results.hpp"
@@ -94,24 +95,26 @@ int main() {
       res[i] += datas[t].res.read(i);
     }
   }
-  cout << '[' << res[0];
-  for (size_t i = 1; i < size; ++ i) {
-    cout << ',' << res[i];
-  }
-  cout << ']' <<  endl;
-  /*  cout << "> Gather results" << endl;
+  string filename = results_dir + "/res_" + T + to_string(N) + "_for_" + to_string(k) + "_" + to_string(h) + ".txt";
+  ofstream file(filename.c_str(), ios::trunc);
+  file << "Coxeter group: " << T << N << endl;
+  file << "Modulus: " << k << endl;
+  file << "Remainder: " << h << endl;
   size_t total = 0;
-  size_t res[ResSize];
-  for (int i = 0; i < ResSize; ++ i) res[i] = 0;
-  for (size_t i = 0; i < nb_threads; ++ i) {
-    total += datas[i].total;
-    for (int j = 0; j < ResSize; ++ j) res[j] += datas[i].res[j];
+  for (size_t i = 0; i < size; ++ i) {
+    total += res[i];
   }
-  cout << " Total = " << total << " vs " << Asize << endl;
-  cout << " -> [" << res[0];
-  for (int i = 1; i < ResSize; ++ i) {
-    cout << ',' << res[i];
+  file << "Total: " << total << endl;
+  file << endl;
+  file << "[" << res[0];
+  for (size_t i = 1; i < size; ++ i) {
+    file << ", " << res[i]; 
   }
-  cout << ']' << endl;*/
- 
+  file << ']' << endl;
+  file << endl;
+  for (size_t i = 0; i < size; ++ i) {
+    file << res[i] << endl;
+  }
+  file.close();
+  delete[] res;
 }

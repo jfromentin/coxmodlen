@@ -1,0 +1,12 @@
+Coxeter group: B3
+Modulus: 3
+Remainder: 1
+Total: 48
+
+[1, 16, 14, 16, 1]
+
+1
+16
+14
+16
+1

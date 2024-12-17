@@ -1,0 +1,9 @@
+Coxeter group: A1
+Modulus: 3
+Remainder: 1
+Total: 2
+
+[1, 1]
+
+1
+1
